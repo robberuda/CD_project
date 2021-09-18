@@ -1,0 +1,10 @@
+f = 1;
+m = 0.2;
+g = 9.8;
+
+plantZNum = 1/m;
+plantZDen = [1 0 0];
+
+FdT_in = tf(plantZNum, plantZDen)
+FdT_g = tf(1, plantZDen);
+
