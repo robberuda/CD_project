@@ -1,7 +1,15 @@
-%f = 1;
+% Nope, non possono essere sommate così; posso però sommare le loro uscite
+% fdt_z = fdt_in + fdt_g;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Funzione di trasferimento sistema evoluzione lungo z
+
 m = 0.2;
 g = 9.8;
 i = 0.1;
+
+Tc = 0.01;
+method = 'tustin';
 
 plantZNum = 1/m;
 plantZDen = [1 0 0];
@@ -9,20 +17,12 @@ plantZDen = [1 0 0];
 fdtPlantZ = tf(plantZNum, plantZDen);
 fdt_g = tf(1, plantZDen);
 
-% Nope, non possono essere sommate così; posso però sommare le loro uscite
-% fdt_z = fdt_in + fdt_g;
-
-% step(fdt_in);
-% step(fdt_g*g);
-
-%fdt_z;
-
 Pz = 0.65;
 Iz = 0.3;
 Dz = 0.35;
 Nz = 100;
 
-fdtPznum = 0.65;
+fdtPznum = Pz;
 fdtPzden = 1;
 
 fdtIznum = Iz;
@@ -36,17 +36,57 @@ fdtDzden = 1+Nz*tf(fdtDzdennum, fdtDzdenden);
 fdtPz = tf(fdtPznum, fdtPzden);
 fdtIz = tf(fdtIznum, fdtIzden);
 % fdtDz = tf(fdtDznum, fdtDzden);
-fdtDz = Dz*Nz/fdtDden;
+fdtDz = Dz*Nz/fdtDzden;
 
 fdtCtrlz = fdtPz + fdtIz + fdtDz;
 
 fdtPlantCtrlz = fdtPlantZ*fdtCtrlz;
-% fdtClosedLoop = fdtPlantCtrlz/( 1 + fdtPlantCtrlz ) %???????????????
-fdtClosedLoop = feedback(fdtPlantCtrlz, 1);
+% fdtClosedLoopz = fdtPlantCtrlz/( 1 + fdtPlantCtrlz ) %???????????????
+fdtClosedLoopz = feedback(fdtPlantCtrlz, 1);
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Funzione di trasferimento sistema evoluzione lungo t
+
+% t is for theta
+
+planttNum = 1/i;
+planttDen = [1 0 0];
+
+fdtPlantt = tf(planttNum, planttDen);
+
+Pt = 0.6;
+It = 0;
+Dt = 0.7;
+Nt = 100;
+
+fdtPtnum = Pt;
+fdtPtden = 1;
+
+fdtItnum = It;
+fdtItden = [1 0];
+
+fdtDtnum = Dt*Nt;
+fdtDtdennum = 1;
+fdtDtdenden = [1, 0];
+fdtDtden = 1+Nt*tf(fdtDtdennum, fdtDtdenden);
+
+fdtPt = tf(fdtPtnum, fdtPtden);
+fdtIt = tf(fdtItnum, fdtItden);
+% fdtDt = tf(fdtDtnum, fdtDtden);
+fdtDt = Dt*Nt/fdtDtden;
+
+fdtCtrlt = fdtPt + fdtIt + fdtDt;
+
+fdtPlantCtrlt = fdtPlantt*fdtCtrlt;
+% fdtClosedLoopt = fdtPlantCtrlt/( 1 + fdtPlantCtrlt ) %???????????????
+fdtClosedLoopt = feedback(fdtPlantCtrlt, 1);
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Funzione di trasferimento sistema evoluzione lungo y
 
 plantyNum = 1/m;
 plantyDen = [1 0 0];
@@ -58,7 +98,7 @@ Iy = 0;
 Dy = 0.4;
 Ny = 100;
 
-fdtPynum = 0.65;
+fdtPynum = Py;
 fdtPyden = 1;
 
 fdtIynum = Iy;
@@ -72,11 +112,17 @@ fdtDyden = 1+Ny*tf(fdtDydennum, fdtDydenden);
 fdtPy = tf(fdtPynum, fdtPyden);
 fdtIy = tf(fdtIynum, fdtIyden);
 % fdtDy = tf(fdtDynum, fdtDyden);
-fdtDy = Dy*Ny/fdtDden;
+fdtDy = Dy*Ny/fdtDyden;
 
 fdtCtrly = fdtPy + fdtIy + fdtDy;
 
-fdtPlantCtrly = fdtPlanty*fdtCtrly;
-% fdtClosedLoop = fdtPlantCtrly/( 1 + fdtPlantCtrly ) %???????????????
-fdtClosedLoop = feedback(fdtPlantCtrly, 1);
+fdtPlantCtrly = fdtPlanty*fdtCtrly*fdtClosedLoopt;
+% fdtClosedLoopy = fdtPlantCtrly/( 1 + fdtPlantCtrly ) %???????????????
+fdtClosedLoopy = feedback(fdtPlantCtrly, 1);
+
+
+
+%%%%%%%%%
+% discretization
+fdtPlantZdisc = c2d(fdtPlantZ, Tc, method)
 

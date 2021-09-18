@@ -1,6 +1,7 @@
 %f = 1;
 m = 0.2;
 g = 9.8;
+i = 0.1;
 
 plantZNum = 1/m;
 plantZDen = [1 0 0];
@@ -45,12 +46,16 @@ fdtClosedLoop = feedback(fdtPlantCtrlz, 1);
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+plantyNum = 1/m;
+plantyDen = [1 0 0];
 
+fdtPlanty = tf(plantyNum, plantyDen);
 
-Py = 0.65;
-Iy = 0.3;
-Dy = 0.35;
+Py = 0.5;
+Iy = 0;
+Dy = 0.4;
 Ny = 100;
 
 fdtPynum = 0.65;
@@ -65,12 +70,50 @@ fdtDydenden = [1, 0];
 fdtDyden = 1+Ny*tf(fdtDydennum, fdtDydenden);
 
 fdtPy = tf(fdtPynum, fdtPyden);
-fdtIy = tf(fdtIznum, fdtIzden);
-% fdtDz = tf(fdtDznum, fdtDzden);
-fdtDz = Dz*Nz/fdtDden;
+fdtIy = tf(fdtIynum, fdtIyden);
+% fdtDy = tf(fdtDynum, fdtDyden);
+fdtDy = Dy*Ny/fdtDden;
 
-fdtCtrlz = fdtPz + fdtIz + fdtDz;
+fdtCtrly = fdtPy + fdtIy + fdtDy;
 
-fdtPlantCtrlz = fdtPlantZ*fdtCtrlz;
-% fdtClosedLoop = fdtPlantCtrlz/( 1 + fdtPlantCtrlz ) %???????????????
-fdtClosedLoop = feedback(fdtPlantCtrlz, 1);
+fdtPlantCtrly = fdtPlanty*fdtCtrly;
+% fdtClosedLoop = fdtPlantCtrly/( 1 + fdtPlantCtrly ) %???????????????
+fdtClosedLoop = feedback(fdtPlantCtrly, 1);
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% t is for theta
+
+planttNum = 1/i;
+planttDen = [1 0 0];
+
+fdtPlantt = tf(planttNum, planttDen);
+
+Pt = 0.5;
+It = 0;
+Dt = 0.4;
+Nt = 100;
+
+fdtPtnum = 0.65;
+fdtPtden = 1;
+
+fdtItnum = It;
+fdtItden = [1 0];
+
+fdtDtnum = Dt*Nt;
+fdtDtdennum = 1;
+fdtDtdenden = [1, 0];
+fdtDtden = 1+Nt*tf(fdtDtdennum, fdtDtdenden);
+
+fdtPt = tf(fdtPtnum, fdtPtden);
+fdtIt = tf(fdtItnum, fdtItden);
+% fdtDt = tf(fdtDtnum, fdtDtden);
+fdtDt = Dt*Ny/fdtDden;
+
+fdtCtrly = fdtPy + fdtIy + fdtDy;
+
+fdtPlantCtrly = fdtPlanty*fdtCtrly;
+% fdtClosedLoop = fdtPlantCtrly/( 1 + fdtPlantCtrly ) %???????????????
+fdtClosedLoop = feedback(fdtPlantCtrly, 1);
