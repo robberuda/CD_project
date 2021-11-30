@@ -124,5 +124,6 @@ fdtClosedLoopy = feedback(fdtPlantCtrly, 1);
 
 %%%%%%%%%
 % discretization
-fdtPlantZdisc = c2d(fdtPlantZ, Tc, method)
+fdtPlantZdisc = c2d(fdtPlantZ, Tc, method);
+fdtClosedLoopzDisc = c2d(fdtClosedLoopz, Tc, method);
 
