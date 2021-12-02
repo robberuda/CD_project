@@ -1,15 +1,20 @@
 % Nope, non possono essere sommate così; posso però sommare le loro uscite
 % fdt_z = fdt_in + fdt_g;
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Funzione di trasferimento sistema evoluzione lungo z
+
+% parametri del modello fisico
 
 m = 0.2;
 g = 9.8;
 i = 0.1;
 
+% parametri della discretizzazione
+
 Tc = 0.01;
 method = 'tustin';
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1 - Funzione di trasferimento sistema evoluzione lungo z
 
 plantZNum = 1/m;
 plantZDen = [1 0 0];
@@ -47,7 +52,7 @@ fdtClosedLoopz = feedback(fdtPlantCtrlz, 1);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Funzione di trasferimento sistema evoluzione lungo t
+% 2 - Funzione di trasferimento sistema evoluzione lungo t
 
 % t is for theta
 
@@ -86,7 +91,7 @@ fdtClosedLoopt = feedback(fdtPlantCtrlt, 1);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Funzione di trasferimento sistema evoluzione lungo y
+% 3 - Funzione di trasferimento sistema evoluzione lungo y
 
 plantyNum = 1/m;
 plantyDen = [1 0 0];
@@ -124,6 +129,20 @@ fdtClosedLoopy = feedback(fdtPlantCtrly, 1);
 
 %%%%%%%%%
 % discretization
-fdtPlantZdisc = c2d(fdtPlantZ, Tc, method);
+fdtPlantZDisc = c2d(fdtPlantZ, Tc, method);
+fdtPlantyDisc = c2d(fdtPlanty, Tc, method);
 fdtClosedLoopzDisc = c2d(fdtClosedLoopz, Tc, method);
+fdtClosedLooptDisc = c2d(fdtClosedLoopt, Tc, method);
+fdtClosedLoopyDisc = c2d(fdtClosedLoopy, Tc, method);
 
+fdtPlantZ
+fdtPlanty
+fdtClosedLoopz
+fdtClosedLoopt
+fdtClosedLoopy
+
+fdtPlantZDisc
+fdtPlantyDisc
+fdtClosedLoopzDisc
+fdtClosedLooptDisc
+fdtClosedLoopyDisc
