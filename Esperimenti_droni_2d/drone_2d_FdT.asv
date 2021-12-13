@@ -151,13 +151,9 @@ disp("Is fdtPlantZDisc stable?")
 disp( isstable(fdtPlantZDisc) )
 
 disp("Is fdtPlantyDisc stable?")
-disp( isstable(fdtPlantyDisc) )
 
 disp("Is fdtClosedLoopzDisc stable?")
-disp( isstable(fdtClosedLoopzDisc) )
 
-disp("Is fdtClosedLooptDisc stable?")
-disp( isstable(fdtClosedLooptDisc) )
+disp("Is fdtPlantZDisc stable?")
 
-disp("Is fdtClosedLoopyDisc stable?")
-disp( isstable(fdtClosedLoopyDisc) )
+disp("Is fdtPlantZDisc stable?")
