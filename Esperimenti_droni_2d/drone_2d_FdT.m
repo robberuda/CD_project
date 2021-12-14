@@ -127,14 +127,15 @@ fdtClosedLoopy = feedback(fdtPlantCtrly, 1);
 
 
 
-% ------------------ discretization ----------------------
+% ------------------ discretization ---------------------------------------
 fdtPlantZDisc = c2d(fdtPlantZ, Tc, method);
 fdtPlantyDisc = c2d(fdtPlanty, Tc, method);
 fdtClosedLoopzDisc = c2d(fdtClosedLoopz, Tc, method);
 fdtClosedLooptDisc = c2d(fdtClosedLoopt, Tc, method);
 fdtClosedLoopyDisc = c2d(fdtClosedLoopy, Tc, method);
-% ------------------ end discretization ------------------
+% ------------------ end discretization -----------------------------------
 
+% ------------------ PRINT SYSTEMS-----------------------------------------
 fdtPlantZ
 fdtPlanty
 fdtClosedLoopz
@@ -146,8 +147,9 @@ fdtPlantyDisc
 fdtClosedLoopzDisc
 fdtClosedLooptDisc
 fdtClosedLoopyDisc
+% ------------------ END PRINT SYSTEMS-------------------------------------
 
-% ----------------- CHECK STABILITÀ CONTINUI ----------------------
+% ----------------- CHECK STABILITÀ CONTINUI ------------------------------
 disp("Is fdtPlantZ stable?")
 disp( isstable(fdtPlantZ) )
 
@@ -162,9 +164,9 @@ disp( isstable(fdtClosedLoopt) )
 
 disp("Is fdtClosedLoopy stable?")
 disp( isstable(fdtClosedLoopy) )
-% ----------------- FINE CHECK STABILITÀ CONTINUI -----------------
+% ----------------- FINE CHECK STABILITÀ CONTINUI -------------------------
 
-% ----------------- CHECK STABILITÀ DISCRETI ----------------------
+% ----------------- CHECK STABILITÀ DISCRETI ------------------------------
 disp("Is fdtPlantZDisc stable?")
 disp( isstable(fdtPlantZDisc) )
 
@@ -179,7 +181,7 @@ disp( isstable(fdtClosedLooptDisc) )
 
 disp("Is fdtClosedLoopyDisc stable?")
 disp( isstable(fdtClosedLoopyDisc) )
-% ----------------- FINE CHECK STABILITÀ DISCRETI -----------------
+% ----------------- FINE CHECK STABILITÀ DISCRETI -------------------------
 
 % ----------------- CALCOLO POLI CONTINUI ---------------------------------
 polesZPlant = pole(fdtPlantZ)
