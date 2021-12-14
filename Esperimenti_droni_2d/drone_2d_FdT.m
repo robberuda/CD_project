@@ -4,16 +4,17 @@
 
 % parametri del modello fisico
 
-m = 0.2;
-g = 9.8;
-i = 0.1;
+m = 0.2; % massa
+i = 0.1; % momento d'inerzia
+g = 9.8; % accelerazione di gravità
+
 
 % parametri della discretizzazione
 
 Tc = 0.01;
 method = 'tustin';
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% -------------------------------------------------------------------------
 % 1 - Funzione di trasferimento sistema evoluzione lungo z
 
 plantZNum = 1/m;
@@ -48,10 +49,10 @@ fdtCtrlz = fdtPz + fdtIz + fdtDz;
 fdtPlantCtrlz = fdtPlantZ*fdtCtrlz;
 % fdtClosedLoopz = fdtPlantCtrlz/( 1 + fdtPlantCtrlz ) %???????????????
 fdtClosedLoopz = feedback(fdtPlantCtrlz, 1);
+% --- FINE - 1 - Funzione di trasferimento sistema evoluzione lungo z -----
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% -------------------------------------------------------------------------
 % 2 - Funzione di trasferimento sistema evoluzione lungo t
 
 % t is for theta
@@ -85,12 +86,13 @@ fdtDt = Dt*Nt/fdtDtden;
 fdtCtrlt = fdtPt + fdtIt + fdtDt;
 
 fdtPlantCtrlt = fdtPlantt*fdtCtrlt;
-% fdtClosedLoopt = fdtPlantCtrlt/( 1 + fdtPlantCtrlt ) %???????????????
+% fdtClosedLoopt = fdtPlantCtrlt/( 1 + fdtPlantCtrlt ) % ???????????????
 fdtClosedLoopt = feedback(fdtPlantCtrlt, 1);
+% --- FINE - 2 - Funzione di trasferimento sistema evoluzione lungo t -----
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% -------------------------------------------------------------------------
 % 3 - Funzione di trasferimento sistema evoluzione lungo y
 
 plantyNum = 1/m;
@@ -124,7 +126,7 @@ fdtCtrly = fdtPy + fdtIy + fdtDy;
 fdtPlantCtrly = fdtPlanty*fdtCtrly*fdtClosedLoopt;
 % fdtClosedLoopy = fdtPlantCtrly/( 1 + fdtPlantCtrly ) %???????????????
 fdtClosedLoopy = feedback(fdtPlantCtrly, 1);
-
+% --- FINE - 3 - Funzione di trasferimento sistema evoluzione lungo y -----
 
 
 % ------------------ discretization ---------------------------------------
@@ -135,7 +137,7 @@ fdtClosedLooptDisc = c2d(fdtClosedLoopt, Tc, method);
 fdtClosedLoopyDisc = c2d(fdtClosedLoopy, Tc, method);
 % ------------------ end discretization -----------------------------------
 
-% ------------------ PRINT SYSTEMS-----------------------------------------
+% ------------------ PRINT SYSTEMS ----------------------------------------
 fdtPlantZ
 fdtPlanty
 fdtClosedLoopz
@@ -211,3 +213,14 @@ modPolesYClosedLoopD = abs(polesYClosedLoopD)
 marginZ = allmargin(fdtClosedLoopz)
 marginT = allmargin(fdtClosedLoopt)
 marginY = allmargin(fdtClosedLoopy)
+% ----------------- FINE CALCOLO MODULO POLI DISCRETI ---------------------
+
+% ----------------- PLOT STEP RESPONSE SISTEMI DISCRETI -------------------
+figure
+step(fdtClosedLoopzDisc)
+legend('z(t)')
+
+figure
+step(fdtClosedLoopyDisc)
+legend('y(t)')
+% ----------------- FINE PLOT STEP RESPONSE SISTEMI DISCRETI --------------
