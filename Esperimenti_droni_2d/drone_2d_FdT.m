@@ -181,18 +181,26 @@ disp("Is fdtClosedLoopyDisc stable?")
 disp( isstable(fdtClosedLoopyDisc) )
 % ----------------- FINE CHECK STABILITÀ DISCRETI -----------------
 
-% ----------------- CALCOLO POLI ----------------------
+% ----------------- CALCOLO POLI CONTINUI ---------------------------------
+polesZPlant = pole(fdtPlantZ)
+polesYPlant = pole(fdtPlanty)
+polesZClosedLoop = pole(fdtClosedLoopz)
+polesTClosedLoop = pole(fdtClosedLoopt)
+polesYClosedLoop = pole(fdtClosedLoopy)
+% ----------------- FINE CALCOLO POLI CONTINUI ----------------------------
+
+% ----------------- CALCOLO POLI DISCRETI ---------------------------------
 polesZPlantD = pole(fdtPlantZDisc)
 polesYPlantD = pole(fdtPlantyDisc)
 polesZClosedLoopD = pole(fdtClosedLoopzDisc)
 polesTClosedLoopD = pole(fdtClosedLooptDisc)
 polesYClosedLoopD = pole(fdtClosedLoopyDisc)
-% ----------------- FINE CALCOLO POLI ----------------------
+% ----------------- FINE CALCOLO POLI DISCRETI ----------------------------
 
-% ----------------- CALCOLO MODULO POLI ----------------------
+% ----------------- CALCOLO MODULO POLI DISCRETI --------------------------
 modpolesZPlantD = abs(polesZPlantD)
 modpolesYPlantD = abs(polesYPlantD)
 modpolesZClosedLoopD = abs(polesZClosedLoopD)
 modpolesTClosedLoopD = abs(polesTClosedLoopD)
 modpolesYClosedLoopD = abs(polesYClosedLoopD)
-% ----------------- FINE CALCOLO MODULO POLI ----------------------
+% ----------------- FINE CALCOLO MODULO POLI DISCRETI ---------------------

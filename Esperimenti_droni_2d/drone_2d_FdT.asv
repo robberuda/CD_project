@@ -148,20 +148,20 @@ fdtClosedLooptDisc
 fdtClosedLoopyDisc
 
 % ----------------- CHECK STABILITÀ CONTINUI ----------------------
-disp("Is fdtPlantZDisc stable?")
-disp( isstable(fdtPlantZDisc) )
+disp("Is fdtPlantZ stable?")
+disp( isstable(fdtPlantZ) )
 
-disp("Is fdtPlantyDisc stable?")
-disp( isstable(fdtPlantyDisc) )
+disp("Is fdtPlanty stable?")
+disp( isstable(fdtPlanty) )
 
-disp("Is fdtClosedLoopzDisc stable?")
-disp( isstable(fdtClosedLoopzDisc) )
+disp("Is fdtClosedLoopz stable?")
+disp( isstable(fdtClosedLoopz) )
 
-disp("Is fdtClosedLooptDisc stable?")
-disp( isstable(fdtClosedLooptDisc) )
+disp("Is fdtClosedLoopt stable?")
+disp( isstable(fdtClosedLoopt) )
 
-disp("Is fdtClosedLoopyDisc stable?")
-disp( isstable(fdtClosedLoopyDisc) )
+disp("Is fdtClosedLoopy stable?")
+disp( isstable(fdtClosedLoopy) )
 % ----------------- FINE CHECK STABILITÀ CONTINUI -----------------
 
 % ----------------- CHECK STABILITÀ DISCRETI ----------------------
@@ -181,18 +181,26 @@ disp("Is fdtClosedLoopyDisc stable?")
 disp( isstable(fdtClosedLoopyDisc) )
 % ----------------- FINE CHECK STABILITÀ DISCRETI -----------------
 
-% ----------------- CALCOLO POLI ----------------------
+% ----------------- CALCOLO POLI CONTINUI ---------------------------------
+polesZPlantD = pole(fdtPlantZ)
+polesYPlantD = pole(fdtPlanty)
+polesZClosedLoopD = pole(fdtClosedLoopz)
+polesTClosedLoopD = pole(fdtClosedLoopt)
+polesYClosedLoopD = pole(fdtClosedLoopy)
+% ----------------- FINE CALCOLO POLI CONTINUI ----------------------------
+
+% ----------------- CALCOLO POLI DISCRETI ---------------------------------
 polesZPlantD = pole(fdtPlantZDisc)
 polesYPlantD = pole(fdtPlantyDisc)
 polesZClosedLoopD = pole(fdtClosedLoopzDisc)
 polesTClosedLoopD = pole(fdtClosedLooptDisc)
 polesYClosedLoopD = pole(fdtClosedLoopyDisc)
-% ----------------- FINE CALCOLO POLI ----------------------
+% ----------------- FINE CALCOLO POLI DISCRETI ----------------------------
 
-% ----------------- CALCOLO MODULO POLI ----------------------
+% ----------------- CALCOLO MODULO POLI DISCRETI --------------------------
 modpolesZPlantD = abs(polesZPlantD)
 modpolesYPlantD = abs(polesYPlantD)
 modpolesZClosedLoopD = abs(polesZClosedLoopD)
 modpolesTClosedLoopD = abs(polesTClosedLoopD)
 modpolesYClosedLoopD = abs(polesYClosedLoopD)
-% ----------------- FINE CALCOLO MODULO POLI ----------------------
+% ----------------- FINE CALCOLO MODULO POLI DISCRETI ---------------------
