@@ -198,9 +198,14 @@ polesYClosedLoopD = pole(fdtClosedLoopyDisc)
 % ----------------- FINE CALCOLO POLI DISCRETI ----------------------------
 
 % ----------------- CALCOLO MODULO POLI DISCRETI --------------------------
-modpolesZPlantD = abs(polesZPlantD)
-modpolesYPlantD = abs(polesYPlantD)
-modpolesZClosedLoopD = abs(polesZClosedLoopD)
-modpolesTClosedLoopD = abs(polesTClosedLoopD)
-modpolesYClosedLoopD = abs(polesYClosedLoopD)
+modPolesZPlantD = abs(polesZPlantD)
+modPolesYPlantD = abs(polesYPlantD)
+modPolesZClosedLoopD = abs(polesZClosedLoopD)
+modPolesTClosedLoopD = abs(polesTClosedLoopD)
+modPolesYClosedLoopD = abs(polesYClosedLoopD)
 % ----------------- FINE CALCOLO MODULO POLI DISCRETI ---------------------
+
+% ----------------- CALCOLO MODULO POLI DISCRETI --------------------------
+marginZ = allmargin(fdtClosedLoopz)
+marginT = allmargin(fdtClosedLoopt)
+marginY = allmargin(fdtClosedLoopy)
