@@ -148,20 +148,20 @@ fdtClosedLooptDisc
 fdtClosedLoopyDisc
 
 % ----------------- CHECK STABILITÀ CONTINUI ----------------------
-disp("Is fdtPlantZ stable?")
-disp( isstable(fdtPlantZ) )
+disp("Is fdtPlantZDisc stable?")
+disp( isstable(fdtPlantZDisc) )
 
-disp("Is fdtPlanty stable?")
-disp( isstable(fdtPlanty) )
+disp("Is fdtPlantyDisc stable?")
+disp( isstable(fdtPlantyDisc) )
 
-disp("Is fdtClosedLoopz stable?")
-disp( isstable(fdtClosedLoopz) )
+disp("Is fdtClosedLoopzDisc stable?")
+disp( isstable(fdtClosedLoopzDisc) )
 
-disp("Is fdtClosedLoopt stable?")
-disp( isstable(fdtClosedLoopt) )
+disp("Is fdtClosedLooptDisc stable?")
+disp( isstable(fdtClosedLooptDisc) )
 
-disp("Is fdtClosedLoopy stable?")
-disp( isstable(fdtClosedLoopy) )
+disp("Is fdtClosedLoopyDisc stable?")
+disp( isstable(fdtClosedLoopyDisc) )
 % ----------------- FINE CHECK STABILITÀ CONTINUI -----------------
 
 % ----------------- CHECK STABILITÀ DISCRETI ----------------------
