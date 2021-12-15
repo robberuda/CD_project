@@ -6,7 +6,7 @@
 
 m = 0.2; % massa
 i = 0.1; % momento d'inerzia
-g = 9.8; % accelerazione di gravità
+g = 9.81; % accelerazione di gravità
 
 
 % parametri della discretizzazione
@@ -36,13 +36,13 @@ fdtIzden = [1 0];
 
 fdtDznum = Dz*Nz;
 fdtDzdennum = 1;
-fdtDzdenden = [1, 0];
+fdtDzdenden = [1, 0]; % questo mi da 1/s
 fdtDzden = 1+Nz*tf(fdtDzdennum, fdtDzdenden);
 
 fdtPz = tf(fdtPznum, fdtPzden);
 fdtIz = tf(fdtIznum, fdtIzden);
 % fdtDz = tf(fdtDznum, fdtDzden);
-fdtDz = Dz*Nz/fdtDzden;
+fdtDz = fdtDznum/fdtDzden;
 
 fdtCtrlz = fdtPz + fdtIz + fdtDz;
 
