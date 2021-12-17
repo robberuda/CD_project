@@ -238,7 +238,7 @@ legend()
 
 %% bode
 
-% ----------------- PLOT STEP RESPONSE SISTEMI DISCRETI -------------------
+% ----------------- PLOT BODE RESPONSE SISTEMI DISCRETI -------------------
 figure
 bode(fdtClosedLoopz)
 hold
@@ -250,4 +250,4 @@ bode(fdtClosedLoopy)
 hold
 bode(fdtClosedLoopyDisc)
 legend()
-% ----------------- FINE PLOT STEP RESPONSE SISTEMI DISCRETI --------------
+% ----------------- FINE PLOT BODE RESPONSE SISTEMI DISCRETI --------------
