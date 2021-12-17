@@ -12,7 +12,7 @@ g = 9.81; % accelerazione di gravità
 % parametri della discretizzazione
 
 Tc = 0.01;
-method = 'tustin';
+method = 'zoh';
 
 % -------------------------------------------------------------------------
 % 1 - Funzione di trasferimento sistema evoluzione lungo z

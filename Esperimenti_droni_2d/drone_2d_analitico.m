@@ -1,6 +1,6 @@
 % parametri della discretizzazione
 Tcamp = 0.01;
-method = 'tustin';
+method = 'zoh';
 % FINE parametri della discretizzazione
 
 % coefficienti PID
