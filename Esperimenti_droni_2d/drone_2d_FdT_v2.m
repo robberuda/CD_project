@@ -52,6 +52,8 @@ fdtPlantCtrlz = fdtPlantZ*fdtCtrlz;
 fdtClosedLoopz = feedback(fdtPlantCtrlz, 1);
 % --- FINE - 1 - Funzione di trasferimento sistema evoluzione lungo z -----
 
+
+
 % --- funzione di trasferimento g -----------------------------------------
 plantGNum = 9.81;
 plantGDen = [1, 0, 0];
@@ -59,6 +61,8 @@ plantGDen = [1, 0, 0];
 fdtPlantG = tf(plantGNum, plantGDen);
 fdtClosedLoopG = feedback(fdtPlantG, fdtCtrlz);
 % --- FINE funzione di trasferimento g ------------------------------------
+
+
 
 % -------------------------------------------------------------------------
 % 2 - Funzione di trasferimento sistema evoluzione lungo t
@@ -139,8 +143,11 @@ fdtClosedLoopy = feedback(fdtPlantCtrly, 1);
 
 % ------------------ discretization ---------------------------------------
 fdtPlantZDisc = c2d(fdtPlantZ, Tc, method);
+fdtPlantGDisc = c2d(fdtPlantG, Tc, method);
 fdtPlantyDisc = c2d(fdtPlanty, Tc, method);
+
 fdtClosedLoopzDisc = c2d(fdtClosedLoopz, Tc, method);
+fdtClosedLoopGDisc = c2d(fdtClosedLoopG, Tc, method);
 fdtClosedLooptDisc = c2d(fdtClosedLoopt, Tc, method);
 fdtClosedLoopyDisc = c2d(fdtClosedLoopy, Tc, method);
 % ------------------ end discretization -----------------------------------
@@ -150,13 +157,17 @@ fdtClosedLoopyDisc = c2d(fdtClosedLoopy, Tc, method);
 % ------------------ PRINT SYSTEMS ----------------------------------------
 fdtPlantZ
 fdtPlanty
+fdtPlantG
 fdtClosedLoopz
+fdtClosedLoopG
 fdtClosedLoopt
 fdtClosedLoopy
 
 fdtPlantZDisc
+fdtPlantGDisc
 fdtPlantyDisc
 fdtClosedLoopzDisc
+fdtClosedLoopGDisc
 fdtClosedLooptDisc
 fdtClosedLoopyDisc
 % ------------------ END PRINT SYSTEMS-------------------------------------
@@ -167,11 +178,17 @@ fdtClosedLoopyDisc
 disp("Is fdtPlantZ stable?")
 disp( isstable(fdtPlantZ) )
 
+disp("Is fdtPlantG stable?")
+disp( isstable(fdtPlantG) )
+
 disp("Is fdtPlanty stable?")
 disp( isstable(fdtPlanty) )
 
 disp("Is fdtClosedLoopz stable?")
 disp( isstable(fdtClosedLoopz) )
+
+disp("Is fdtClosedLoopG stable?")
+disp( isstable(fdtClosedLoopG) )
 
 disp("Is fdtClosedLoopt stable?")
 disp( isstable(fdtClosedLoopt) )
@@ -184,11 +201,17 @@ disp( isstable(fdtClosedLoopy) )
 disp("Is fdtPlantZDisc stable?")
 disp( isstable(fdtPlantZDisc) )
 
+disp("Is fdtPlantGDisc stable?")
+disp( isstable(fdtPlantGDisc) )
+
 disp("Is fdtPlantyDisc stable?")
 disp( isstable(fdtPlantyDisc) )
 
 disp("Is fdtClosedLoopzDisc stable?")
 disp( isstable(fdtClosedLoopzDisc) )
+
+disp("Is fdtClosedLoopGDisc stable?")
+disp( isstable(fdtClosedLoopGDisc) )
 
 disp("Is fdtClosedLooptDisc stable?")
 disp( isstable(fdtClosedLooptDisc) )
@@ -199,16 +222,20 @@ disp( isstable(fdtClosedLoopyDisc) )
 
 % ----------------- CALCOLO POLI CONTINUI ---------------------------------
 polesZPlant = pole(fdtPlantZ)
+polesGPlant = pole(fdtPlantG)
 polesYPlant = pole(fdtPlanty)
 polesZClosedLoop = pole(fdtClosedLoopz)
+polesGClosedLoop = pole(fdtClosedLoopG)
 polesTClosedLoop = pole(fdtClosedLoopt)
 polesYClosedLoop = pole(fdtClosedLoopy)
 % ----------------- FINE CALCOLO POLI CONTINUI ----------------------------
 
 % ----------------- CALCOLO POLI DISCRETI ---------------------------------
 polesZPlantD = pole(fdtPlantZDisc)
+polesGPlantD = pole(fdtPlantGDisc)
 polesYPlantD = pole(fdtPlantyDisc)
 polesZClosedLoopD = pole(fdtClosedLoopzDisc)
+polesGClosedLoopD = pole(fdtClosedLoopGDisc)
 polesTClosedLoopD = pole(fdtClosedLooptDisc)
 polesYClosedLoopD = pole(fdtClosedLoopyDisc)
 % ----------------- FINE CALCOLO POLI DISCRETI ----------------------------
@@ -217,12 +244,14 @@ polesYClosedLoopD = pole(fdtClosedLoopyDisc)
 modPolesZPlantD = abs(polesZPlantD)
 modPolesYPlantD = abs(polesYPlantD)
 modPolesZClosedLoopD = abs(polesZClosedLoopD)
+modPolesGClosedLoopD = abs(polesGClosedLoopD)
 modPolesTClosedLoopD = abs(polesTClosedLoopD)
 modPolesYClosedLoopD = abs(polesYClosedLoopD)
 % ----------------- FINE CALCOLO MODULO POLI DISCRETI ---------------------
 
 % ----------------- CALCOLO MARGINI ---------------------------------------
 marginZ = allmargin(fdtClosedLoopz)
+marginG = allmargin(fdtClosedLoopG)
 marginT = allmargin(fdtClosedLoopt)
 marginY = allmargin(fdtClosedLoopy)
 % ----------------- FINE CALCOLO MARGINI ----------------------------------
@@ -234,6 +263,12 @@ figure
 step(fdtClosedLoopz)
 hold
 step(fdtClosedLoopzDisc)
+legend()
+
+figure
+step(fdtClosedLoopG)
+hold
+step(fdtClosedLoopGDisc)
 legend()
 
 figure
@@ -250,6 +285,12 @@ figure
 bode(fdtClosedLoopz)
 hold
 bode(fdtClosedLoopzDisc)
+legend()
+
+figure
+bode(fdtClosedLoopG)
+hold
+bode(fdtClosedLoopGDisc)
 legend()
 
 figure
