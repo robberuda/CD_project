@@ -52,6 +52,7 @@ fdtPlantCtrlz = fdtPlantZ*fdtCtrlz;
 fdtClosedLoopz = feedback(fdtPlantCtrlz, 1);
 % --- FINE - 1 - Funzione di trasferimento sistema evoluzione lungo z -----
 
+% --- fun
 
 % -------------------------------------------------------------------------
 % 2 - Funzione di trasferimento sistema evoluzione lungo t
@@ -214,11 +215,11 @@ modPolesTClosedLoopD = abs(polesTClosedLoopD)
 modPolesYClosedLoopD = abs(polesYClosedLoopD)
 % ----------------- FINE CALCOLO MODULO POLI DISCRETI ---------------------
 
-% ----------------- CALCOLO MODULO POLI DISCRETI --------------------------
+% ----------------- CALCOLO MARGINI ---------------------------------------
 marginZ = allmargin(fdtClosedLoopz)
 marginT = allmargin(fdtClosedLoopt)
 marginY = allmargin(fdtClosedLoopy)
-% ----------------- FINE CALCOLO MODULO POLI DISCRETI ---------------------
+% ----------------- FINE CALCOLO MARGINI ----------------------------------
 
 %% step responses
 
@@ -230,6 +231,24 @@ step(fdtClosedLoopzDisc)
 legend()
 
 figure
+step(fdtClosedLoopy)
+hold
 step(fdtClosedLoopyDisc)
-legend('y(t)')
+legend()
 % ----------------- FINE PLOT STEP RESPONSE SISTEMI DISCRETI --------------
+
+%% bode
+
+% ----------------- PLOT BODE RESPONSE SISTEMI DISCRETI -------------------
+figure
+bode(fdtClosedLoopz)
+hold
+bode(fdtClosedLoopzDisc)
+legend()
+
+figure
+bode(fdtClosedLoopy)
+hold
+bode(fdtClosedLoopyDisc)
+legend()
+% ----------------- FINE PLOT BODE RESPONSE SISTEMI DISCRETI --------------

@@ -52,6 +52,13 @@ fdtPlantCtrlz = fdtPlantZ*fdtCtrlz;
 fdtClosedLoopz = feedback(fdtPlantCtrlz, 1);
 % --- FINE - 1 - Funzione di trasferimento sistema evoluzione lungo z -----
 
+% --- funzione di trasferimento g -----------------------------------------
+plantGNum = 9.81;
+plantGDen = [1, 0, 0];
+
+fdtPlantG = tf(plantGNum, plantGDen);
+fdtClosedLoopG = feedback(fdtPlantG, fdtCtrlz);
+% --- FINE funzione di trasferimento g ------------------------------------
 
 % -------------------------------------------------------------------------
 % 2 - Funzione di trasferimento sistema evoluzione lungo t
