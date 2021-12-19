@@ -299,3 +299,42 @@ hold
 bode(fdtClosedLoopyDisc)
 legend()
 % ----------------- FINE PLOT BODE RESPONSE SISTEMI DISCRETI --------------
+
+%% risposta complessiva al gradino
+
+Tfinal = 15;
+desiredHeight = 10;
+
+gradino = desiredHeight*step( tf(1), Tfinal );
+
+figure
+plot(gradino)
+hold
+plot( desiredHeight*step(fdtClosedLoopzDisc, Tfinal) + ...
+    step(fdtClosedLoopGDisc, Tfinal) )
+grid on
+legend('risposta step e disturbo gravità')
+
+%% risposta complessiva alla rampa (saturata)
+
+slope = desiredHeight/2; % Se uguale ad altezza, è raggiunta in 1 sec
+t = 0:Tc:Tfinal;
+ramp = max(0, min(slope*t,desiredHeight));
+
+rampResponse = lsim(fdtClosedLoopzDisc, ramp, t);
+
+figure
+plot( t, rampResponse + step(fdtClosedLoopGDisc, Tfinal) )
+grid on
+legend('risposta step e disturbo gravità')
+
+%% confronto risposta step e rampa
+
+figure
+plot( t, desiredHeight*step(fdtClosedLoopzDisc, Tfinal) + ...
+    step(fdtClosedLoopGDisc, Tfinal) )
+hold
+plot( t,ramp)
+plot( t, rampResponse + step(fdtClosedLoopGDisc, Tfinal) )
+grid on
+legend('step response, with gravity', 'ramp', 'ramp response, with gravity');
