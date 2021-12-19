@@ -305,15 +305,15 @@ legend()
 Tfinal = 15;
 desiredHeight = 10;
 
-gradino = desiredHeight*step( tf(1), Tfinal );
+gradino = desiredHeight * ones(Tfinal/Tc + 1, 1);
 
 figure
-plot(gradino)
+plot( t, gradino)
 hold
-plot( desiredHeight*step(fdtClosedLoopzDisc, Tfinal) + ...
+plot( t, desiredHeight*step(fdtClosedLoopzDisc, Tfinal) + ...
     step(fdtClosedLoopGDisc, Tfinal) )
 grid on
-legend('risposta step e disturbo gravità')
+legend('step', 'risposta step e disturbo gravità')
 
 %% risposta complessiva alla rampa (saturata)
 
@@ -331,10 +331,12 @@ legend('risposta step e disturbo gravità')
 %% confronto risposta step e rampa
 
 figure
+plot( t, gradino)
+hold
 plot( t, desiredHeight*step(fdtClosedLoopzDisc, Tfinal) + ...
     step(fdtClosedLoopGDisc, Tfinal) )
-hold
-plot( t,ramp)
+plot( t,ramp, 'green')
 plot( t, rampResponse + step(fdtClosedLoopGDisc, Tfinal) )
 grid on
-legend('step response, with gravity', 'ramp', 'ramp response, with gravity');
+legend('step', 'step response, with gravity', 'ramp', ...
+    'ramp response, with gravity');
