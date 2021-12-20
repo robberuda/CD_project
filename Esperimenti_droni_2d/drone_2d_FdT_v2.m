@@ -340,3 +340,16 @@ plot( t, rampResponse + step(fdtClosedLoopGDisc, Tfinal) )
 grid on
 legend('step', 'step response, with gravity', 'ramp', ...
     'ramp response, with gravity');
+
+%% y con azione "disturbante" di z
+fdtZcmdF = feedback(fdtCtrlz, fdtPlantZ);
+fdtFY = feedback(fdtPlanty, -1*fdtCtrly*fdtClosedLoopt);
+
+fdtZcmdY_1 = fdtZcmdF*fdtFY;
+step(fdtZcmdY_1)
+
+stepZF = step(fdtZcmdF, Tfinal);
+impulseFY = impulse(fdtFY, Tfinal);
+stepZY = conv(stepZF, impulseFY);
+figure
+plot(stepZY)

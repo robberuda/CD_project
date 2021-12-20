@@ -305,25 +305,42 @@ legend()
 Tfinal = 15;
 desiredHeight = 10;
 
+gradino = desiredHeight * ones(Tfinal/Tc + 1, 1);
+
 figure
-plot( desiredHeight*step(fdtClosedLoopzDisc, Tfinal) + ...
+plot( t, gradino)
+hold
+plot( t, desiredHeight*step(fdtClosedLoopzDisc, Tfinal) + ...
     step(fdtClosedLoopGDisc, Tfinal) )
 grid on
-legend('risposta step e disturbo gravità')
+legend('step', 'risposta step e disturbo gravità')
 
 %% risposta complessiva alla rampa (saturata)
 
-slope = desiredHeight; % Se uguale ad altezza, è raggiunta in 1 sec
+slope = desiredHeight/2; % Se uguale ad altezza, è raggiunta in 1 sec
 t = 0:Tc:Tfinal;
 ramp = max(0, min(slope*t,desiredHeight));
 
 rampResponse = lsim(fdtClosedLoopzDisc, ramp, t);
 
-plot(rampResponse);
-
 figure
-plot( rampResponse + step(fdtClosedLoopGDisc, Tfinal) )
+plot( t, rampResponse + step(fdtClosedLoopGDisc, Tfinal) )
 grid on
 legend('risposta step e disturbo gravità')
 
 %% confronto risposta step e rampa
+
+figure
+plot( t, gradino)
+hold
+plot( t, desiredHeight*step(fdtClosedLoopzDisc, Tfinal) + ...
+    step(fdtClosedLoopGDisc, Tfinal) )
+plot( t,ramp, 'green')
+plot( t, rampResponse + step(fdtClosedLoopGDisc, Tfinal) )
+grid on
+legend('step', 'step response, with gravity', 'ramp', ...
+    'ramp response, with gravity');
+
+%% y con azione "disturbante" di z
+fdtZcmdF = feedback(fdtCtrlz, fdtPlantZ);
+fdtFY = feedback(fdtPlanty
