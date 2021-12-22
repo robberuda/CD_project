@@ -313,7 +313,7 @@ gradino = desiredHeight * ones(Tfinal/Tc + 1, 1);
 figure
 plot( t, gradino)
 hold
-plot( t, desiredHeight*step(fdtClosedLoopzDisc, Tfinal) + ...
+plot( t, desiredHeight*step(fdtClosedLoopzDisc, Tfinal) - ...
     step(fdtClosedLoopGDisc, Tfinal) )
 grid on
 legend('step', 'risposta step e disturbo gravità')
@@ -336,15 +336,30 @@ legend('risposta step e disturbo gravità')
 figure
 plot( t, gradino)
 hold
-plot( t, desiredHeight*step(fdtClosedLoopzDisc, Tfinal) + ...
+plot( t, desiredHeight*step(fdtClosedLoopzDisc, Tfinal) - ...
     step(fdtClosedLoopGDisc, Tfinal) )
 plot( t,ramp, 'green')
-plot( t, rampResponse + step(fdtClosedLoopGDisc, Tfinal) )
+plot( t, rampResponse - step(fdtClosedLoopGDisc, Tfinal) )
 grid on
 legend('step', 'step response, with gravity', 'ramp', ...
     'ramp response, with gravity');
 
+%% forza esercitata dal drone # NON FUNGE BENISSIMO
+Fz = feedback(fdtCtrlz, fdtPlantZ);
+Fg = feedback(1/m, fdtCtrlz*fdtPlantG);
+
+figure
+% plot( t, desiredHeight*step(Fz, Tfinal) - ...
+%    step(Fg, Tfinal) )
+plot(  desiredHeight*step(Fz, Tfinal) )
+legend('risposta FORZA step')
+figure
+plot(  step(Fg, Tfinal) )
+grid on
+legend('risposta disturbo gravità')
+
 %% y con azione "disturbante" di z
+%{
 % in realtà, con le fdt disacoppiate, z non influisce su y
 fdtZcmdF = feedback(fdtCtrlz, fdtPlantZ);
 fdtFY = feedback(fdtPlanty, -1*fdtCtrly*fdtClosedLoopt);
@@ -357,3 +372,4 @@ impulseFY = impulse(fdtFY, Tfinal);
 stepZY = conv(stepZF, impulseFY);
 figure
 plot(stepZY)
+%}
