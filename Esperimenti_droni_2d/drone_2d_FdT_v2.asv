@@ -242,7 +242,7 @@ polesYClosedLoopD = pole(fdtClosedLoopyDisc)
 
 % ----------------- CALCOLO MODULO POLI DISCRETI --------------------------
 modPolesZPlantD = abs(polesZPlantD)
-modPolesGPlantD = abs(polesGPlantD)
+modPolesGPlantD = abs(
 modPolesYPlantD = abs(polesYPlantD)
 modPolesZClosedLoopD = abs(polesZClosedLoopD)
 modPolesGClosedLoopD = abs(polesGClosedLoopD)
