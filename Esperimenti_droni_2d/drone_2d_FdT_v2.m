@@ -257,6 +257,57 @@ marginT = allmargin(fdtClosedLoopt)
 marginY = allmargin(fdtClosedLoopy)
 % ----------------- FINE CALCOLO MARGINI ----------------------------------
 
+%% Plot dei poli
+pzplot(fdtClosedLoopzDisc, 'r', fdtClosedLoopGDisc, 'g', ...
+    fdtClosedLooptDisc, 'b', fdtClosedLoopyDisc, 'm')
+legend
+figure
+pzplot(fdtClosedLoopz, 'r', fdtClosedLoopG, 'g', ...
+    fdtClosedLoopt, 'b', fdtClosedLoopy, 'm')
+legend
+
+
+figure
+pzplot(fdtClosedLoopz)
+grid on
+legend
+
+figure
+pzplot(fdtClosedLoopG)
+grid on
+legend
+
+figure
+pzplot(fdtClosedLoopt)
+grid on
+legend
+
+figure
+pzplot(fdtClosedLoopy)
+grid on
+legend
+
+
+figure
+pzplot(fdtClosedLoopzDisc)
+grid on
+legend
+
+figure
+pzplot(fdtClosedLoopGDisc)
+grid on
+legend
+
+figure
+pzplot(fdtClosedLooptDisc)
+grid on
+legend
+
+figure
+pzplot(fdtClosedLoopyDisc)
+grid on
+legend
+
 %% step responses
 
 % ----------------- PLOT STEP RESPONSE SISTEMI DISCRETI -------------------
