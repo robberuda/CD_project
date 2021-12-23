@@ -1,6 +1,3 @@
-% Nope, non possono essere sommate così; posso però sommare le loro uscite
-% fdt_z = fdt_in + fdt_g;
-
 %% creazione FdT dei diversi subsystems
 
 % parametri del modello fisico
@@ -37,18 +34,16 @@ fdtIzden = [1 0];
 
 fdtDznum = Dz*Nz;
 fdtDzdennum = 1;
-fdtDzdenden = [1, 0]; % questo mi da 1/s
+fdtDzdenden = [1, 0]; 
 fdtDzden = 1+Nz*tf(fdtDzdennum, fdtDzdenden);
 
 fdtPz = tf(fdtPznum, fdtPzden);
 fdtIz = tf(fdtIznum, fdtIzden);
-% fdtDz = tf(fdtDznum, fdtDzden);
 fdtDz = fdtDznum/fdtDzden;
 
 fdtCtrlz = fdtPz + fdtIz + fdtDz;
 
 fdtPlantCtrlz = fdtPlantZ*fdtCtrlz;
-% fdtClosedLoopz = fdtPlantCtrlz/( 1 + fdtPlantCtrlz ) %???????????????
 fdtClosedLoopz = feedback(fdtPlantCtrlz, 1);
 % --- FINE - 1 - Funzione di trasferimento sistema evoluzione lungo z -----
 
@@ -92,13 +87,11 @@ fdtDtden = 1+Nt*tf(fdtDtdennum, fdtDtdenden);
 
 fdtPt = tf(fdtPtnum, fdtPtden);
 fdtIt = tf(fdtItnum, fdtItden);
-% fdtDt = tf(fdtDtnum, fdtDtden);
 fdtDt = Dt*Nt/fdtDtden;
 
 fdtCtrlt = fdtPt + fdtIt + fdtDt;
 
 fdtPlantCtrlt = fdtPlantt*fdtCtrlt;
-% fdtClosedLoopt = fdtPlantCtrlt/( 1 + fdtPlantCtrlt ) % ???????????????
 fdtClosedLoopt = feedback(fdtPlantCtrlt, 1);
 % --- FINE - 2 - Funzione di trasferimento sistema evoluzione lungo t -----
 
@@ -130,13 +123,11 @@ fdtDyden = 1+Ny*tf(fdtDydennum, fdtDydenden);
 
 fdtPy = tf(fdtPynum, fdtPyden);
 fdtIy = tf(fdtIynum, fdtIyden);
-% fdtDy = tf(fdtDynum, fdtDyden);
 fdtDy = Dy*Ny/fdtDyden;
 
 fdtCtrly = fdtPy + fdtIy + fdtDy;
 
 fdtPlantCtrly = fdtPlanty*fdtCtrly*fdtClosedLoopt;
-% fdtClosedLoopy = fdtPlantCtrly/( 1 + fdtPlantCtrly ) %???????????????
 fdtClosedLoopy = feedback(fdtPlantCtrly, 1);
 % --- FINE - 3 - Funzione di trasferimento sistema evoluzione lungo y -----
 
@@ -395,32 +386,3 @@ grid on
 legend('step', 'step response, with gravity', 'ramp', ...
     'ramp response, with gravity');
 
-%% forza esercitata dal drone # NON FUNGE BENISSIMO
-Fz = feedback(fdtCtrlz, fdtPlantZ);
-Fg = feedback(1/m, fdtCtrlz*fdtPlantG);
-
-figure
-% plot( t, desiredHeight*step(Fz, Tfinal) - ...
-%    step(Fg, Tfinal) )
-plot(  desiredHeight*step(Fz, Tfinal) )
-legend('risposta FORZA step')
-figure
-plot(  step(Fg, Tfinal) )
-grid on
-legend('risposta disturbo gravità')
-
-%% y con azione "disturbante" di z
-%{
-% in realtà, con le fdt disacoppiate, z non influisce su y
-fdtZcmdF = feedback(fdtCtrlz, fdtPlantZ);
-fdtFY = feedback(fdtPlanty, -1*fdtCtrly*fdtClosedLoopt);
-
-fdtZcmdY_1 = fdtZcmdF*fdtFY;
-step(fdtZcmdY_1)
-
-stepZF = step(fdtZcmdF, Tfinal);
-impulseFY = impulse(fdtFY, Tfinal);
-stepZY = conv(stepZF, impulseFY);
-figure
-plot(stepZY)
-%}
